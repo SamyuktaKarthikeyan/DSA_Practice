@@ -1,0 +1,164 @@
+// Online Java Compiler
+// Use this editor to write, compile and run your Java code online
+
+
+import java.util.*;
+class Main
+{
+    public class Node{
+        int data;
+        Node next;
+        Node(int data){
+            this.data=data;
+            this.next=null;
+        }
+    }
+    Node head;
+    Main(){
+        this.head=null;
+    }
+    public void insertAtBegin(int data){
+        Node newnode=new Node(data);
+        newnode.next=head;
+        head=newnode;
+    }
+    public void insertAtEnd(int data){
+        Node newnode=new Node(data);
+        if(head==null){
+            head=newnode;
+        }
+        else{
+            Node temp=head;
+            while(temp.next!=null){
+                temp=temp.next;
+            }
+            temp.next=newnode;
+        }
+        
+    }
+    public void print(){
+        Node temp=head;
+        while(temp!=null){
+            System.out.print(temp.data+" ");
+            temp=temp.next;
+        }
+    }
+    public void deleteFirst(){
+        Node temp=head;
+        head=head.next;
+        temp.next=null;
+        System.out.print(temp.data);
+    }
+    public void deleteAtLast(){
+        if(head==null){
+            return;
+        }
+        else{
+            Node current=head;
+            Node prev=null;
+            while(current.next!=null){
+                prev=current;
+                current=current.next;
+            }
+            prev.next=null;
+            System.out.println(current.data);
+        }
+    }
+    public void deleteAtPos(int pos){
+            if(pos==1){
+                head=head.next;
+                return;
+            }
+            Node temp=null;
+            Node curr=head;
+            while(pos-1>0&& curr!=null){
+                pos--;
+                temp=curr;
+                curr=curr.next;
+            }
+            temp.next=curr.next;
+            return;
+    }
+    public void reverse(){
+        Node curr=head;
+        Node next=null;
+        Node prev=null;
+        while(curr!=null){
+            next=curr.next;
+            curr.next=prev;
+            prev=curr;
+            curr=next;
+        }
+        head=prev;
+    }
+    public void deleteAtVal(int val){
+        if(head.data==val){
+            head=head.next;
+            return;
+        }
+        Node curr=head;
+        Node temp=null;
+        while(curr!=null && curr.data!=val){
+            temp=curr;
+            curr=curr.next;
+        }
+ 
+        temp.next=curr.next;
+        return;
+    }
+    public void insertAtPos(int val, int pos){
+        Node newnode=new Node(val);
+        if(pos==1){
+            newnode.next=head;
+            head=newnode;
+            return;
+        }
+        Node temp=head;
+        Node dummy=null;
+        int i=1;
+        for(i=1;i<pos && temp!=null;i++){
+            dummy=temp;
+            temp=temp.next;
+        }
+        if(temp==null && i<pos){
+            System.out.println("Outta size broda");
+            return;
+        }
+        dummy.next=newnode;
+        newnode.next=temp;
+    }
+    public void insertBeforeValue(int pos, int val){
+        Node newnode=new Node(val);
+        if(head.data==pos){
+            newnode.next=head;
+            head=newnode;
+            return;
+        }
+        Node curr=head;
+        Node dummy=null;
+        while(curr!=null && curr.data!=pos){
+            dummy=curr;
+            curr=curr.next;
+        }
+        if(curr==null){
+            System.out.println("Not found");
+            return;
+        }
+        dummy.next=newnode;
+        newnode.next=curr;
+        return;
+    }
+	public static void main(String[] args) {
+	    Scanner sc=new Scanner(System.in);
+	    int n=sc.nextInt();
+	    Main l=new Main();
+	    for(int i=0;i<n;i++){
+            l.insertAtBegin(sc.nextInt());	        
+	    }
+	    l.insertBeforeValue(3,100);
+	    l.print();
+	    System.out.println();
+	    l.reverse();
+	    l.print();
+	}
+}
